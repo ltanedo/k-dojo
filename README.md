@@ -1,6 +1,6 @@
 # A Rust CLI template on Gitpod
 
-This is a [Rust CLI](https://rust-starter.github.io) template configured for ephemeral development environments on [Gitpod](https://www.gitpod.io/).
+This is a [Rust CLI](https://rust-starter.github.io) template configured for ephemeral cloud development environments on [Gitpod](https://www.gitpod.io/).
 
 ## Next Steps
 
