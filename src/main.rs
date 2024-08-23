@@ -1,38 +1,49 @@
-#[cfg(not(debug_assertions))]
-use human_panic::setup_panic;
+use polars::prelude::*;
+use std::io::Cursor;
+use reqwest::blocking::Client;
 
-#[cfg(debug_assertions)]
-extern crate better_panic;
-
-use utils::app_config::AppConfig;
-use utils::error::Result;
-
-/// The main entry point of the application.
-fn main() -> Result<()> {
-    // Human Panic. Only enabled when *not* debugging.
-    #[cfg(not(debug_assertions))]
-    {
-        setup_panic!();
-    }
-
-    // Better Panic. Only enabled *when* debugging.
-    #[cfg(debug_assertions)]
-    {
-        better_panic::Settings::debug()
-            .most_recent_first(false)
-            .lineno_suffix(true)
-            .verbosity(better_panic::Verbosity::Full)
-            .install();
-    }
-
-    let _guard = utils::logger::setup_logging()?;
-
-    // Initialize Configuration
-    let config_contents = include_str!("resources/default_config.toml");
-    AppConfig::init(Some(config_contents))?;
-
-    // Match Commands
-    cli::cli_match()?;
-
-    Ok(())
+fn main() {
+    
+    let url = "https://theunitedstates.io/congress-legislators/legislators-historical.csv";
+    
+    let mut schema = Schema::new();
+    schema.with_column(
+        "first_name".into(),
+        DataType::Categorical(None, Default::default()),
+    );
+    schema.with_column(
+        "gender".into(),
+        DataType::Categorical(None, Default::default()),
+    );
+    schema.with_column(
+        "type".into(),
+        DataType::Categorical(None, Default::default()),
+    );
+    schema.with_column(
+        "state".into(),
+        DataType::Categorical(None, Default::default()),
+    );
+    schema.with_column(
+        "party".into(),
+        DataType::Categorical(None, Default::default()),
+    );
+    schema.with_column("birthday".into(), DataType::Date);
+    
+    let data: Vec<u8> = Client::new()
+        .get(url)
+            .send().expect("msg")
+            .text().expect("msg")
+            .bytes()
+        .collect();
+    // print!("{:?}", data);
+    
+    let dataset = CsvReadOptions::default()
+        .with_has_header(true)
+        // .with_schema(Some(Arc::new(schema)))
+        .map_parse_options(|parse_options| parse_options.with_try_parse_dates(true))
+        .into_reader_with_file_handle(Cursor::new(data))
+        .finish()
+        .unwrap();
+    
+    println!("{}", &dataset);
 }

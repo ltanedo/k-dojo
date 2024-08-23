@@ -1,8 +1,36 @@
+
+image:
+    file: .gitpod/Dockerfile
+
 tasks:
-  - name: Build & Run
-    init: cargo build
-    command: cargo run help
+
+  - name: Rust - Installation
+    # before: cargo build 
+    command: cargo run
+    # init: cargo run
+
+
+  - name: Python - Installation
+    # before: python -m venv .pyvenv
+    init: pip install -r requirements.txt
+    before: source ./.pyenv/bin/activate
+    command: python src/main.py
+    
+
+  - name: JS - Installation
+    # before: npm install
+    command: npm run test
+    
 
 vscode:
   extensions:
-    - rust-lang.rust-analyzer
+    - rust-lang.rust-analyzer.0.3.1277
+# # https://github.com/gitpod-io/workspace-images?tab=readme-ov-file
+# tasks:
+#   - name: Build & Run
+#     init: cargo build
+#     command: cargo run
+
+# vscode:
+#   extensions:
+#     - rust-lang.rust-analyzer

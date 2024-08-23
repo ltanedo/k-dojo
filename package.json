@@ -1,0 +1,19 @@
+{
+    "name": "rust-dojo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/main.js",
+    "scripts": {
+      "test": "node src/main.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+      "nodejs-polars": "^0.0.5",
+      "axios": "0.24.0",
+      "formik": "^2.2.9",
+      "swr": "^1.1.2"
+    }
+}
+  
