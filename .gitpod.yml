@@ -7,24 +7,29 @@ tasks:
   - name: Rust - Installation
     # before: cargo build 
     command: cargo run
-    # init: cargo run
 
 
   - name: Python - Installation
-    # before: python -m venv .pyvenv
+    before: source .pyvenv/bin/activate
     init: pip install -r requirements.txt
-    before: source ./.pyenv/bin/activate
     command: python src/main.py
     
 
   - name: JS - Installation
-    # before: npm install
+    before: npm install
     command: npm run test
     
+  - name: Dart - Installation
+    before:  dart pub get
+    init: dart --version
+    command: dart src/main.dart
 
-vscode:
-  extensions:
-    - rust-lang.rust-analyzer.0.3.1277
+# vscode:
+  # extensions:
+  #   - rust-lang.rust-analyzer.0.3.1277
+
+
+
 # # https://github.com/gitpod-io/workspace-images?tab=readme-ov-file
 # tasks:
 #   - name: Build & Run

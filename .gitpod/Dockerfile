@@ -4,14 +4,21 @@
 
 # FROM gitpod/workspace-rust:2024-07-14-17-19-51 
 FROM gitpod/workspace-full:2024-08-08-14-54-59 
-
 WORKDIR /workspace/k-dojo
+
+RUN wget https://storage.googleapis.com/dart-archive/channels/stable/release/latest/linux_packages/dart_3.5.1-1_amd64.deb
+RUN sudo dpkg -i dart_3.5.1-1_amd64.deb
+RUN rm dart_3.5.1-1_amd64.deb
+COPY . .
+
 RUN rustc --version
 RUN cargo --version
 RUN rustup --version
 RUN python --version
 RUN node --version
-COPY . .
+RUN dart --version
+
+
 
 # FROM gitpod/workspace-python-3.12:2024-01-08-20-24-21
 # COPY . .
