@@ -16,7 +16,7 @@ tasks:
   - name: JS - Installation
     before: npm install
     command: npm run test
-    
+
   - name: Dart - Installation
     before:  dart pub get
     init: dart --version
