@@ -8,12 +8,10 @@ tasks:
     # before: cargo build 
     command: cargo run
 
-
   - name: Python - Installation
     before: source .pyvenv/bin/activate
     init: pip install -r requirements.txt
     command: python src/main.py
-    
 
   - name: JS - Installation
     before: npm install
@@ -30,12 +28,3 @@ tasks:
 
 
 
-# # https://github.com/gitpod-io/workspace-images?tab=readme-ov-file
-# tasks:
-#   - name: Build & Run
-#     init: cargo build
-#     command: cargo run
-
-# vscode:
-#   extensions:
-#     - rust-lang.rust-analyzer

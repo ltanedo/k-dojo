@@ -9,7 +9,6 @@ WORKDIR /workspace/k-dojo
 RUN wget https://storage.googleapis.com/dart-archive/channels/stable/release/latest/linux_packages/dart_3.5.1-1_amd64.deb
 RUN sudo dpkg -i dart_3.5.1-1_amd64.deb
 RUN rm dart_3.5.1-1_amd64.deb
-COPY . .
 
 RUN rustc --version
 RUN cargo --version
